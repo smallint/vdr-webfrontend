@@ -1,0 +1,82 @@
+/*******************************
+            Global
+*******************************/
+
+html,
+body {
+  font-size: 15px;
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #FFFFFF;
+  margin: 0px;
+  padding: 0px;
+  color: #555555;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+}
+
+
+/*******************************
+         Custom styling
+*******************************/
+
+.event { float: left; width: 24em; padding-right: 1em; padding-bottom: 1em; }
+/*.event > .header { height: 2.5em; }*/
+.event > .ui.segment.attached { height: 12em; overflow: hidden; padding-bottom: 0.5em; }
+
+.events > .ui.selection.list > .item.active {
+	background-color: #eef;
+}
+
+.ui.header > span.name { float: left; }
+.ui.header > span.meta { float: right; }
+.clear { clear: both; }
+
+.app { height: 100%; position: relative; }
+.app > div > .content {
+	position: absolute;
+	width: 100%;
+	height: auto;
+	top: 40px;
+	bottom: 0;
+	overflow: auto;
+}
+.content.column.four.wide {
+	width: 25%;
+}
+.content.column.four.wide.right {
+	left: 75%;
+}
+.content.column.twelve.wide {
+	width: 75%;
+}
+.content.column.twelve.wide.right {
+	left: 25%;
+}
+.content.column.bordered.right {
+	border-left: 1px solid #eee;
+	box-sizing: border-box;
+}
+
+.content > .container {
+	padding: 20px;
+	position: relative;
+	overflow: auto;
+}
+a.item {
+	text-decoration: none;
+}
+table input[type=text] { width: 100%; }
+
+.content.loader {
+	background-image: url(lib/images/loader-large.gif);
+	background-position: center center;
+	background-repeat:no-repeat;
+}
+
+.content.loader > .container {
+	display: none;
+}

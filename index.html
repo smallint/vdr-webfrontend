@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VDR</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="language" content="de">
+	<meta name="Robots" content="index, follow, noodp">
+	<meta name="Keywords" lang="de" content="VDR, webfrontend">
+	<meta name="Description" lang="de" content="Webfrontend for Video Disk Recorder">
+	<meta name="copyright" content="smallint">
+	<meta name="author" content="smallint">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="lib/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/css/notifier.css">
+	<link rel="stylesheet" type="text/css" href="base.css">
+
+	<!-- JS libraries -->
+	<script src="lib/javascript/jquery.min.js"></script>
+	<script src="lib/javascript/angular.min.js"></script>
+	<script src="lib/javascript/angular-route.min.js"></script>
+	<script src="lib/javascript/angular-translate.min.js"></script>
+	<script src="lib/javascript/angular-notifier.js"></script>
+	<script src="lib/javascript/angular-dialog.js"></script>
+	<script src="lib/javascript/semantic.min.js"></script>
+
+	<!-- Angular application -->
+	<script src="app/app.js"></script>
+	<script src="app/directives.js"></script>
+	<script src="app/filter.js"></script>
+	<script src="app/lang.js"></script>
+	<script src="app/ctrl/main.js"></script>
+	<script src="app/ctrl/epg.js"></script>
+	<script src="app/ctrl/now.js"></script>
+	<script src="app/ctrl/timers.js"></script>
+	<script src="app/ctrl/recs.js"></script>
+</head>
+<body ng-app="VDR" ng-controller="MainCtrl">
+	<!-- Sidebar menu -->
+	<div class="ui large inverted vertical icon sidebar menu">
+		<a class="item" href="http://www.tvdr.de/" target="blank">
+			<i class="inverted large circular red awsome home icon"></i>
+			<br/>
+			<b>VDR</b><br/>
+			<i>The Video Disk Recorder</i>
+		</a>
+		<div class="item">
+			<a><b>{{ 'MENU_NAV' | translate }}</b></a>
+			<div class="menu">
+				<a class="item" href="#/now" active-link="active">{{ 'MENU_NOW' | translate }}</a>
+				<a class="item" href="#/epg" active-link="active">{{ 'MENU_EPG' | translate }}</a>
+				<a class="item" href="#/timers" active-link="active">{{ 'MENU_TIMERS' | translate }}</a>
+				<a class="item" href="#/recordings" active-link="active">{{ 'MENU_RECS' | translate }}</a>
+			</div>
+		</div>
+		<div ng-if="channelGroups" class="item">
+			<a><b>{{ 'MENU_CHAGROUPS' | translate }}</b></a>
+			<div class="menu">
+				<a ng-repeat="(grp,chans) in channelGroups"
+				   ng-click="setChannelGroup(grp)"
+				   ng-class="{'active':grp==currentGroup}"
+				   class="item">{{grp}}</a>
+			</div>
+		</div>
+		<div class="item">
+			<a><b>{{ 'MENU_LANG' | translate }}</b></a>
+			<div class="menu">
+				<a ng-click="changeLanguage('de')" class="item">Deutsch</a>
+				<a ng-click="changeLanguage('en')" class="item">English</a>
+			</div>
+		</div>
+		<a class="item about">
+			{{ 'MENU_ABOUT' | translate }}
+		</a>
+	</div>
+
+	<div class="app">
+		<div class="ui inverted main menu top attached">
+			<div class="ui right attached black launch button" id="menu-launch">
+				<i class="list layout icon"></i>
+			</div>
+			<div class="title item">
+				<b>VDR Webfrontend</b>
+			</div>
+			<div ng-if="currentGroup" class="item">{{'MENU_CHAGROUP'|translate}}: {{currentGroup}}</div>
+			<!-- div class="inverted right menu">
+				<div class="ui simple dropdown item">
+					{{ 'MENU_LANG' | translate }} <i class="icon dropdown"></i>
+					<div class="menu">
+						<a ng-click="changeLanguage('de')" class="item">Deutsch</a>
+						<a ng-click="changeLanguage('en')" class="item">English</a>
+					</div>
+				</div>
+			</div -->
+		</div>
+		<div ng-view></div>
+	</div>
+
+	<!-- About dialog -->
+	<div class="ui modal" id="about-dlg">
+		<i class="close icon"></i>
+		<div class="header">
+			VDR web frontend
+		</div>
+		<div class="content">
+			Web frontend for <a class="item" href="http://www.tvdr.de/" target="blank">
+			The Video Disk Recorder</a>.
+		</div>
+	</div>
+
+	<!-- Event info dialog -->
+	<div class="ui modal" id="evt-info">
+		<i class="close icon"></i>
+		<div class="header">
+			{{currentEvent.channel_name}}: {{currentEvent.title}}
+		</div>
+		<div class="content">
+			<div class="ui header">{{currentEvent.start_time|date:'shortTime'}} -
+			{{currentEvent.end_time|date:'shortTime'}}
+			</div>
+			<span>
+			{{currentEvent.start_time|date:'fullDate'}}
+			</span>
+			<p multiline-watch="currentEvent.description"></p>
+		</div>
+	</div>
+
+	<!-- Add timer dialog -->
+	<div class="ui modal" id="add-timer">
+		<i class="close icon"></i>
+		<div class="header">
+			{{'CMD_TIMER_ADD'|translate}}
+		</div>
+		<div class="content">
+			<table class="ui basic table">
+				<tr>
+					<td>{{'CHANNEL'|translate}}</td><td>{{currentTimer.channel_name}}</td>
+				</tr>
+				<tr ng-if="currentTimer.event_start_time && currentTimer.event_end_time">
+					<td>{{'TIME'|translate}}</td><td>{{currentTimer.event_start_time}} - {{currentTimer.event_end_time}}</td>
+				</tr>
+				<tr>
+					<td>{{'TITLE'|translate}}</td><td><input type="text" ng-model="currentTimer.filename"></td>
+				</tr>
+				<tr>
+					<td>{{'DAY'|translate}}</td><td><input type="text" ng-model="currentTimer.day"><br/><i>yyyy-mm-dd</i></td>
+				</tr>
+				<tr>
+					<td>{{'WEEKDAY'|translate}}</td>
+					<td>
+						<input ng-model="currentTimer.repeats[0]" type="checkbox">{{'WEEKDAY_0'|translate}}</input>
+						<input ng-model="currentTimer.repeats[1]" type="checkbox">{{'WEEKDAY_1'|translate}}</input>
+						<input ng-model="currentTimer.repeats[2]" type="checkbox">{{'WEEKDAY_2'|translate}}</input>
+						<input ng-model="currentTimer.repeats[3]" type="checkbox">{{'WEEKDAY_3'|translate}}</input>
+						<input ng-model="currentTimer.repeats[4]" type="checkbox">{{'WEEKDAY_4'|translate}}</input>
+						<input ng-model="currentTimer.repeats[5]" type="checkbox">{{'WEEKDAY_5'|translate}}</input>
+						<input ng-model="currentTimer.repeats[6]" type="checkbox">{{'WEEKDAY_6'|translate}}</input>
+					</td>
+				</tr>
+				<tr>
+					<td>{{'START'|translate}}</td><td><input type="text" ng-model="currentTimer.start"><br/><i>HHMM (24h)</i></td>
+				</tr>
+				<tr>
+					<td>{{'END'|translate}}</td><td><input type="text" ng-model="currentTimer.stop"><br/><i>HHMM (24h)</i></td>
+				</tr>
+			</table>
+		</div>
+		<div class="actions">
+			<div ng-click="addTimer(currentTimer)" class="ui red button">{{'CMD_RECORD'|translate}}</div>
+		</div>
+	</div>
+</body>
+</html>

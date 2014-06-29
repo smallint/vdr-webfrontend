@@ -1,0 +1,9 @@
+{
+	"API": "examples/",
+	"timer": {
+		"margin": {
+			"before": 5,
+			"after": 5
+		}
+	}
+}

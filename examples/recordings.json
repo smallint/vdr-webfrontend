@@ -1,0 +1,16 @@
+{"recordings":[{
+ "number":0,
+ "name":"Asterix in Amerika",
+ "file_name":"\/var\/lib\/video.00\/Asterix_in_Amerika\/2011-06-19.12.40.1-0.rec",
+ "is_new":false,
+ "is_edited":false,
+ "is_pes_recording":false,
+ "duration":-1,
+ "frames_per_second":50,
+ "marks":["0:03:17.10", "1:43:07.24"],
+ "event_title":"Asterix in Amerika",
+ "event_short_text":"",
+ "event_description":"(Zeichentrickfilm, DEU 1994)",
+ "event_start_time":1308480705,
+ "event_duration":4611
+ }],"count":1,"total":2}

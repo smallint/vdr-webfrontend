@@ -1,0 +1,23 @@
+<div class="content">
+	<div class="timers container">
+		<div class="ui header">Timers</div>
+		<div class="ui divided selection list">
+			<a class="item" ng-repeat="t in timers">
+				<div class="left floated description">
+					<i class="link icon circle" ng-class="{'red':!t.is_active, 'green':t.is_active}"
+					   ng-click="toggle(t)" title="Toggle active state"></i><br/>
+					<i class="link icon edit" ng-click="edit(t)" title="Edit"></i>				
+				</div>
+				<div class="left floated description">
+					<b>{{t.filename}}</b><br/>{{t.channel_name}}<br/>
+				</div>
+				<div class="right floated">
+					<i class="link icon remove" ng-click="remove(t)" title="{{'CMD_TIMER_DELETE'|translate}}"></i>
+				</div>
+				<div class="right floated">
+					{{t.start_timestamp}}<br/>{{t.stop_timestamp}}
+				</div>
+			</a>
+		</div>
+	</div>
+</div>

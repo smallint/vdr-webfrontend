@@ -1,0 +1,60 @@
+div.notify {
+    padding: 12px;
+    margin: 0 0 6px 0;
+    background-color: #eee;
+    border: 1px solid white;
+    opacity: 0.95;
+    color: #000;
+    border-radius: 3px;
+    box-shadow: #999 0 0 12px;
+    width: 300px;
+}
+
+/* header from web server error response */
+div.notify h1 {
+    font-size: 1em;
+}
+
+div.notify .content {
+    width: 252px;
+    margin-left: 12px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+div.notify .content .title {
+    font-weight: bold;
+}
+
+div.notify .icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 36px;
+    height: 36px;
+    font-family: Icons;
+    font-style: normal;
+    font-size: 36px;
+    line-height: 1;
+    font-weight: normal;
+    text-align: center;
+}
+
+div.notify.success .icon:before {
+    color: #080;
+    content: "\f058";
+}
+
+div.notify.error .icon:before {
+    color: #800;
+    content: "\f05e";
+}
+
+div.notify.warning .icon:before {
+    color: #f80;
+    content: "\f071";
+}
+
+div.notify.info .icon:before {
+    color: #08f;
+    content: "\f05a";
+}

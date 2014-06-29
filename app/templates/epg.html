@@ -1,0 +1,38 @@
+<div class="content container four wide column">
+	<div class="channels container">
+		<div class="ui header">Channels</div>
+		<div class="ui divided selection list">
+			<a ng-repeat="chan in channels" class="item" ng-class="{'active':channelname==chan.name}" href="#/epg/{{chan.name}}">
+				<!-- div class="left floated"><i class="icon star"></i></div -->
+				<div class="description">{{chan.name}}</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="content container twelve wide bordered column right">
+	<div class="events container">
+		<div ng-if="channelname" class="ui header">Shows</div>
+		<div ng-if="channelname" ng-repeat="e in epg" class="ui divided selection list">
+			<div class="ui tiny top attached inverted teal header right aligned">
+			{{e.date | date:'fullDate'}}
+			</div>
+			<a class="item" ng-repeat="evt in e.events" ng-class="{'active':evt.selected}">
+				<div class="left floated">
+					<i class="link icon circle" ng-class="{'red':!evt.timer_active, 'green':evt.timer_active}"
+					   ng-click="timer(evt)" title="{{'CMD_RECORD'|translate}}"></i>
+				</div>
+				<div class="right floated duration">{{evt.duration|duration}}</div>
+				<div class="right floated date">{{evt.start_time|date:'shortTime'}}</div>
+				<div class="description"><b>{{evt.title}}</b></div>
+				<p ng-if="evt.description" multiline="evt.description">
+				</p>
+			</a>
+		</div>
+		<div ng-if="!channelname">
+			<div class="ui warning message">
+				<div class="header">{{ 'ERROR_NO_CHANNEL_HEAD' | translate }}</div>
+				{{ 'ERROR_NO_CHANNEL_MSG' | translate }}
+			</div>
+		</div>
+	</div>
+</div>

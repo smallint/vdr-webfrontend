@@ -1,0 +1,30 @@
+<div class="content">
+	<div class="now container">
+		<div ng-repeat="evt in events" class="event">
+			<div class="ui tiny teal inverted header attached top">
+				<span class="name">{{evt.channel_name}}</span><span class="sub header meta">
+					{{evt.start_time|date:'shortTime'}}-{{evt.end_time|date:'shortTime'}}
+				</span>
+				<div class="clear"></div>
+			</div>
+			<div class="ui attached segment">
+				{{evt.start_time|date:'fullDate'}}
+				<div style="float:right">
+					<i title="Info" class="link info icon" ng-click="info(evt)"></i>
+					<a href="#/epg/{{evt.channel_name}}"><i title="EPG for this channel" class="black link layout list icon"></i></a>
+					<i title="{{'CMD_RECORD'|translate}}" class="link circle icon"
+					   ng-class="{'red':!evt.timer_active, 'green':evt.timer_active}"
+					   ng-click="timer(evt)"></i>
+				</div>
+				<h4 class="ui header">{{evt.title}}</h4>
+				<p ng-if="evt.description" class="description" ellipsis="evt.description" len="100"></p>
+			</div>
+			<div class="ui attached progress" ng-class="{successful : evt.progress < 100}">
+				<div class="bar" style="width:{{evt.progress}}%"></div>
+			</div>
+			<!-- div class="ui tiny header attached bottom">
+				<i title="Record" class="link red circle icon"></i>
+			</div -->
+		</div>
+	</div>
+</div>

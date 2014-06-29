@@ -1,0 +1,24 @@
+{
+    "count": 1, 
+    "timers": [
+        {
+            "channel": "C-71-71-61920", 
+            "channel_name": "ORF1 HD", 
+            "day": "2011-06-26", 
+            "event_id": "27312", 
+            "filename": "Mad Money", 
+            "id": "C-71-71-61920:0:1309039200:2013:2200", 
+            "is_active": "true", 
+            "is_pending": "false", 
+            "is_recording": "false", 
+            "lifetime": "99", 
+            "priority": "50", 
+            "start": "2013", 
+            "start_timestamp": "2011-12-24 19:00:00", 
+            "stop": "2200", 
+            "stop_timestamp": "2011-12-24 20:00:00", 
+            "weekdays": "-------"
+        }
+    ], 
+    "total": 2
+}
