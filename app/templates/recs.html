@@ -3,17 +3,17 @@
 		<div class="ui header">Recordings</div>
 		<div class="ui divided selection list">
 			<a class="item" ng-repeat="r in recordings">
-				<div class="left floated description">
-					<b>{{r.event_title}}</b><br/>
-					{{r.event_description}}<br/>
-					<i class="icon file"></i><i>{{r.file_name}}</i>
-				</div>
 				<div class="right floated">
 					<i class="link icon remove" ng-click="remove(r)" title="{{'CMD_RECORDING_DELETE'|translate}}"></i>
 				</div>
 				<div class="right floated" style="text-align:right">
 					{{r.event_start_time|date:'yyyy-MM-dd HH:mm:ss'}}<br/>{{r.event_end_time|date:'yyyy-MM-dd HH:mm:ss'}}<br/>
 					{{r.event_duration | duration}}
+				</div>
+				<div class="description">
+					<b>{{r.event_title}}</b><br/>
+					<p multiline-watch="r.event_description"></p>
+					<i class="icon file"></i><i>{{r.file_name}}</i>
 				</div>
 			</a>
 		</div>

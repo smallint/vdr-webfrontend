@@ -14,6 +14,7 @@ function($scope, $timeout, $http, $filter, siNotifier, siDialog) {
 				var date = new Date(rec.event_start_time*1000);
 				rec.event_end_time = new Date((rec.event_start_time+rec.event_duration)*1000);
 				rec.event_start_time = date;
+				rec.event_description = rec.event_description.split('\n');
 			}
 			siNotifier.success(gApp.translateFormat('RECORDINGS_LOADED', $scope.recordings.length), "Recordings");
 		})
